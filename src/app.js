@@ -2,28 +2,40 @@
 
 // load modules
 const express = require('express');
+const app = express();
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const session = require('express-session');
 
-const app = express();
+// morgan
+app.use(morgan('dev'));
 
-//mongoose connection
+//mongodb connection
 mongoose.connect('mongodb://localhost:27017/crAPI');
 const db = mongoose.connection;
 
-db.on('error', function (err) {
-  if (err) {
-    console.log(`There's an error connecting to the database: ${err}`)
-  }
-    console.log('Connection to database sucessful!')
-})
+//mongo error
+db.on('error', function(err){
+  console.error("connection error:", err);
+});
+
+db.once('open', function () {
+  console.log(' db connection successful');
+});
+
+// serve static files from /public
+app.use(express.static('public'))
+
+// parse incoming requests
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 
 /* ----------- ROUTES ---------- */
 
-const router = require('./routes/routes.js');
+const router = require('./routes/index.js');
 app.use('/api', router)
-
-
 
 
 // set our port
