@@ -41,11 +41,13 @@ const CourseSchema = new Schema({
       type: String,
       required: true,
     },
-  }],
+  },
+],
+
   reviews: [
     {
-    type: Schema.ObjectId,
-    ref: 'Review',
+      type: Schema.ObjectId,
+      ref: 'Review',
     },
   ],
 });// end of CourseSchema
@@ -78,7 +80,6 @@ const Course = mongoose.model('Course', CourseSchema);
 const Review = mongoose.model('Review', ReviewSchema);
 
 /* ---------- END OF MODULES ---------- */
-
 
 
 /* ---------- EXPORTS ---------- */

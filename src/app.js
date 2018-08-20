@@ -38,7 +38,7 @@ const router = require('./routes/index.js');
 app.use('/api', router)
 
 
-// set our port
+// set port
 app.set('port', process.env.PORT || 3000);
 
 // morgan gives us http request logging
