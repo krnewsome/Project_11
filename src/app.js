@@ -36,9 +36,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const router = require('./routes/index.js');
 app.use('/api', router);
 
-// set port
-app.set('port', process.env.PORT || 3000);
-
 // morgan
 app.use(morgan('dev'));
 
@@ -56,9 +53,12 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(err.status || 500).json({
     message: err.message,
-    error: {},
+    error: err,
   });
 });
+
+// set port
+app.set('port', process.env.PORT || 3000);
 
 // start listening on our port
 const server = app.listen(app.get('port'), () => {

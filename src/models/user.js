@@ -49,7 +49,7 @@ UserSchema.statics.authenticate = function (emailAddress, password, callback) {
       if (result === true) {
         return callback(null, user);
       } else {
-        return callback;
+        return callback();
       }
     });// end of execution
   });// end of find user
@@ -62,6 +62,7 @@ UserSchema.pre('save', function (next) {
     if (err) {
       return next(err);
     }
+    
     user.password = hash;
     next();
   });
